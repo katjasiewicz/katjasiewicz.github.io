@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -30,27 +30,27 @@
             letter-spacing: 2px;
         }
 
-        /* Przyciski do przewijania sekcji */
+        /* Nawigacja jako sticky navbar */
         .nav {
-            position: fixed;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
             padding: 10px 0;
-            text-align: center;
             z-index: 1000;
+            display: flex;
+            justify-content: center;
         }
         .nav a {
             color: #fff;
             text-decoration: none;
-            margin: 0 15px;
-            padding: 10px;
-            display: inline-block;
+            margin-left: 15px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
             transition: background 0.3s ease;
         }
         .nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
         }
 
         /* Sekcje strony */
@@ -95,6 +95,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Stylizacja sekcji z referencjami */
+        #testimonials {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        /* Sekcja pasji */
+        #hobbies {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
     </style>
 </head>
 <body>
@@ -113,6 +130,51 @@
     <section id="about" class="container fade-in">
         <h1>Moje Imię i Nazwisko</h1>
         <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych. Uwielbiam tworzyć dynamiczne i responsywne aplikacje z wykorzystaniem najnowszych technologii.</p>
+    </section>
+
+    <!-- Sekcja: Umiejętności -->
+    <section id="skills" class="container fade-in">
+        <h2>Umiejętności</h2>
+        <p>HTML, CSS, JavaScript, React, Vue, Python, PHP, Laravel</p>
+    </section>
+
+    <!-- Sekcja: Projekty -->
+    <section id="projects" class="container fade-in">
+        <h2>Projekty</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <h3>Projekt 1</h3>
+                <p>Opis mojego projektu. Możesz zobaczyć więcej szczegółów na GitHubie.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projekt 2</h3>
+                <p>Opis mojego drugiego projektu. Możesz zobaczyć więcej na GitHubie.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projekt 3</h3>
+                <p>Opis mojego trzeciego projektu. Kliknij, aby zobaczyć kod na GitHubie.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja: Referencje -->
+    <section id="testimonials" class="container fade-in">
+        <h2>Referencje</h2>
+        <p>"Pracowałem z [Twoje Imię] nad wieloma projektami i zawsze dostarczał świetną jakość!" - Klient</p>
+        <p>"Doskonały programista, który zawsze znajduje najlepsze rozwiązania!" - Kolega</p>
+    </section>
+
+    <!-- Sekcja: Pasje -->
+    <section id="hobbies" class="container fade-in">
+        <h2>Pasje</h2>
+        <p>Interesuję się programowaniem, sztuką, podróżami oraz nowymi technologiami.</p>
+    </section>
+
+    <!-- Sekcja: Kontakt -->
+    <section id="contact" class="container fade-in">
+        <h2>Kontakt</h2>
+        <p>Jeśli chcesz się ze mną skontaktować, wypełnij formularz Google: </p>
+        <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank" style="color: #66BB6A; text-decoration: underline;">Formularz Kontaktowy</a>
     </section>
 
     <script>
