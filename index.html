@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -20,22 +20,24 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
-            text-align: center;
         }
 
         /* Nagłówki */
-        h1, h2, p {
+        h1, h2 {
             text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* Nieruchomy pasek menu u góry */
+        /* Przyciski do przewijania sekcji */
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background: rgba(0, 0, 0, 0.7);
-            padding: 15px 0;
+            padding: 10px 0;
             text-align: center;
             z-index: 1000;
         }
@@ -44,30 +46,22 @@
             text-decoration: none;
             margin: 0 15px;
             padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
+            display: inline-block;
             transition: background 0.3s ease;
         }
         .nav a:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Sekcje strony */
         section {
-            padding: 100px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 60px; /* Zapewnia odstęp od paska menu */
+            padding: 100px 0;
+            text-align: center;
         }
 
-        /* Poprawiona sekcja O mnie */
         #about {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            height: 100vh;
-            padding: 50px 20px;
         }
 
         /* Stylizacja kart projektów */
@@ -90,9 +84,22 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
+
+        /* Animacje wejścia */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
+
+    <!-- Nawigacja -->
     <div class="nav">
         <a href="#about">O mnie</a>
         <a href="#skills">Umiejętności</a>
@@ -102,43 +109,26 @@
         <a href="#contact">Kontakt</a>
     </div>
 
-    <section id="about" class="container">
+    <!-- Sekcja: O mnie -->
+    <section id="about" class="container fade-in">
         <h1>Moje Imię i Nazwisko</h1>
-        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych.</p>
+        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych. Uwielbiam tworzyć dynamiczne i responsywne aplikacje z wykorzystaniem najnowszych technologii.</p>
     </section>
 
-    <section id="skills" class="container">
-        <h2>Umiejętności</h2>
-        <p>HTML, CSS, JavaScript, React, Vue, Python, PHP, Laravel</p>
-    </section>
+    <script>
+        // Animacja wchodzenia elementów podczas przewijania
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show');
+                }
+            });
+        });
 
-    <section id="projects" class="container">
-        <h2>Projekty</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <h3>Projekt 1</h3>
-                <p>Opis projektu.</p>
-            </div>
-            <div class="project-card">
-                <h3>Projekt 2</h3>
-                <p>Opis projektu.</p>
-            </div>
-        </div>
-    </section>
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
 
-    <section id="testimonials" class="container">
-        <h2>Referencje</h2>
-        <p>"Świetny programista!"</p>
-    </section>
-
-    <section id="hobbies" class="container">
-        <h2>Pasje</h2>
-        <p>Interesuję się programowaniem, sztuką, podróżami oraz nowymi technologiami.</p>
-    </section>
-
-    <section id="contact" class="container">
-        <h2>Kontakt</h2>
-        <p>Wypełnij formularz: <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank">Formularz Kontaktowy</a></p>
-    </section>
 </body>
 </html>
