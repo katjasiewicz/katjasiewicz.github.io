@@ -1,1 +1,192 @@
-hello world!
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moje Kreatywne CV</title>
+    <style>
+        /* Ustawienia tła z gradientem w zieleni */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: #fff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Stylizacja kontenera sekcji */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Nagłówki */
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Przyciski do przewijania sekcji */
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .nav a:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Sekcje strony */
+        section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        #about {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Stylizacja kart projektów */
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Animacje wejścia */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Stylizacja sekcji z referencjami */
+        #testimonials {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        /* Sekcja pasji */
+        #hobbies {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Nawigacja -->
+    <div class="nav">
+        <a href="#about">O mnie</a>
+        <a href="#skills">Umiejętności</a>
+        <a href="#projects">Projekty</a>
+        <a href="#testimonials">Referencje</a>
+        <a href="#hobbies">Pasje</a>
+        <a href="#contact">Kontakt</a>
+    </div>
+
+    <!-- Sekcja: O mnie -->
+    <section id="about" class="container fade-in">
+        <h1>Moje Imię i Nazwisko</h1>
+        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych. Uwielbiam tworzyć dynamiczne i responsywne aplikacje z wykorzystaniem najnowszych technologii.</p>
+    </section>
+
+    <!-- Sekcja: Umiejętności -->
+    <section id="skills" class="container fade-in">
+        <h2>Umiejętności</h2>
+        <p>HTML, CSS, JavaScript, React, Vue, Python, PHP, Laravel</p>
+    </section>
+
+    <!-- Sekcja: Projekty -->
+    <section id="projects" class="container fade-in">
+        <h2>Projekty</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <h3>Projekt 1</h3>
+                <p>Opis mojego projektu. Możesz zobaczyć więcej szczegółów na GitHubie.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projekt 2</h3>
+                <p>Opis mojego drugiego projektu. Możesz zobaczyć więcej na GitHubie.</p>
+            </div>
+            <div class="project-card">
+                <h3>Projekt 3</h3>
+                <p>Opis mojego trzeciego projektu. Kliknij, aby zobaczyć kod na GitHubie.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sekcja: Referencje -->
+    <section id="testimonials" class="container fade-in">
+        <h2>Referencje</h2>
+        <p>"Pracowałem z [Twoje Imię] nad wieloma projektami i zawsze dostarczał świetną jakość!" - Klient</p>
+        <p>"Doskonały programista, który zawsze znajduje najlepsze rozwiązania!" - Kolega</p>
+    </section>
+
+    <!-- Sekcja: Pasje -->
+    <section id="hobbies" class="container fade-in">
+        <h2>Pasje</h2>
+        <p>Interesuję się programowaniem, sztuką, podróżami oraz nowymi technologiami.</p>
+    </section>
+
+    <!-- Sekcja: Kontakt -->
+    <section id="contact" class="container fade-in">
+        <h2>Kontakt</h2>
+        <p>Jeśli chcesz się ze mną skontaktować, wypełnij formularz Google: </p>
+        <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank" style="color: #66BB6A; text-decoration: underline;">Formularz Kontaktowy</a>
+    </section>
+
+    <script>
+        // Animacja wchodzenia elementów podczas przewijania
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show');
+                }
+            });
+        });
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
+
+</body>
+</html>
