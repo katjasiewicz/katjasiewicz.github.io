@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
@@ -20,14 +20,12 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
+            text-align: center;
         }
 
         /* Nagłówki */
-        h1, h2 {
+        h1, h2, p {
             text-align: center;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
         /* Przyciski do przewijania sekcji */
@@ -51,13 +49,19 @@
 
         /* Sekcje strony */
         section {
-            padding: 100px 0;
-            text-align: center;
+            padding: 100px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
+        /* Poprawiona sekcja O mnie */
         #about {
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
+            height: 100vh;
+            padding: 50px 20px;
         }
 
         /* Stylizacja kart projektów */
@@ -80,39 +84,9 @@
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
         }
-
-        /* Animacje wejścia */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Stylizacja sekcji z referencjami */
-        #testimonials {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
-        /* Sekcja pasji */
-        #hobbies {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-
     </style>
 </head>
 <body>
-
-    <!-- Nawigacja -->
     <div class="nav">
         <a href="#about">O mnie</a>
         <a href="#skills">Umiejętności</a>
@@ -122,71 +96,43 @@
         <a href="#contact">Kontakt</a>
     </div>
 
-    <!-- Sekcja: O mnie -->
-    <section id="about" class="container fade-in">
+    <section id="about" class="container">
         <h1>Moje Imię i Nazwisko</h1>
-        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych. Uwielbiam tworzyć dynamiczne i responsywne aplikacje z wykorzystaniem najnowszych technologii.</p>
+        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych.</p>
     </section>
 
-    <!-- Sekcja: Umiejętności -->
-    <section id="skills" class="container fade-in">
+    <section id="skills" class="container">
         <h2>Umiejętności</h2>
         <p>HTML, CSS, JavaScript, React, Vue, Python, PHP, Laravel</p>
     </section>
 
-    <!-- Sekcja: Projekty -->
-    <section id="projects" class="container fade-in">
+    <section id="projects" class="container">
         <h2>Projekty</h2>
         <div class="project-grid">
             <div class="project-card">
                 <h3>Projekt 1</h3>
-                <p>Opis mojego projektu. Możesz zobaczyć więcej szczegółów na GitHubie.</p>
+                <p>Opis projektu.</p>
             </div>
             <div class="project-card">
                 <h3>Projekt 2</h3>
-                <p>Opis mojego drugiego projektu. Możesz zobaczyć więcej na GitHubie.</p>
-            </div>
-            <div class="project-card">
-                <h3>Projekt 3</h3>
-                <p>Opis mojego trzeciego projektu. Kliknij, aby zobaczyć kod na GitHubie.</p>
+                <p>Opis projektu.</p>
             </div>
         </div>
     </section>
 
-    <!-- Sekcja: Referencje -->
-    <section id="testimonials" class="container fade-in">
+    <section id="testimonials" class="container">
         <h2>Referencje</h2>
-        <p>"Pracowałem z [Twoje Imię] nad wieloma projektami i zawsze dostarczał świetną jakość!" - Klient</p>
-        <p>"Doskonały programista, który zawsze znajduje najlepsze rozwiązania!" - Kolega</p>
+        <p>"Świetny programista!"</p>
     </section>
 
-    <!-- Sekcja: Pasje -->
-    <section id="hobbies" class="container fade-in">
+    <section id="hobbies" class="container">
         <h2>Pasje</h2>
         <p>Interesuję się programowaniem, sztuką, podróżami oraz nowymi technologiami.</p>
     </section>
 
-    <!-- Sekcja: Kontakt -->
-    <section id="contact" class="container fade-in">
+    <section id="contact" class="container">
         <h2>Kontakt</h2>
-        <p>Jeśli chcesz się ze mną skontaktować, wypełnij formularz Google: </p>
-        <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank" style="color: #66BB6A; text-decoration: underline;">Formularz Kontaktowy</a>
+        <p>Wypełnij formularz: <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank">Formularz Kontaktowy</a></p>
     </section>
-
-    <script>
-        // Animacja wchodzenia elementów podczas przewijania
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show');
-                }
-            });
-        });
-
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-    </script>
-
 </body>
 </html>
