@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paintball Platform – Laravel Project</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #4CAF50, #66BB6A);
+            color: #fff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            background-color: #334433;
+            padding: 10px 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        .nav a:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        .project-details {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 20px;
+            line-height: 1.8em;
+        }
+
+        a.github-link {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Nawigacja -->
+    <div class="nav">
+        <a href="index.html">Strona główna</a>
+        <a href="#opis">Opis</a>
+        <a href="#technologie">Technologie</a>
+        <a href="#funkcje">Funkcje</a>
+        <a href="#rozwoj">Rozwój</a>
+    </div>
+
+    <!-- Tytuł -->
+    <section class="container fade-in">
+        <h1>Projekt Laravel: Paintball Platform</h1>
+        <p style="text-align: center;">Platforma do wyszukiwania i rezerwacji gier paintballowych z funkcjami społecznościowymi</p>
+    </section>
+
+    <!-- Opis -->
+    <section id="opis" class="container fade-in">
+        <div class="project-details">
+            <h2>Opis projektu</h2>
+            <p>
+                Aplikacja webowa wspierająca społeczność paintballową. Platforma umożliwia firmom publikowanie ofert, a graczom – rejestrację, prowadzenie blogów, korzystanie z kalendarza rezerwacji oraz wymianę doświadczeń na forum. Projekt realizowany jest jako część pracy inżynierskiej.
+            </p>
+        </div>
+    </section>
+
+    <!-- Technologie -->
+    <section id="technologie" class="container fade-in">
+        <div class="project-details">
+            <h2>Technologie i narzędzia</h2>
+            <ul>
+                <li><strong>Backend:</strong> Laravel 11.5, PHP 8.x, Breeze (auth), Blade</li>
+                <li><strong>Frontend:</strong> HTML, CSS, Blade</li>
+                <li><strong>Baza danych:</strong> MySQL</li>
+                <li><strong>Testowanie:</strong> Pest</li>
+                <li><strong>Kontrola wersji:</strong> Git, GitHub</li>
+                <li><strong>Planowane:</strong> Docker, GitHub Actions, Prometheus/Grafana</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Funkcjonalności -->
+    <section id="funkcje" class="container fade-in">
+        <div class="project-details">
+            <h2>Główne funkcjonalności</h2>
+            <ul>
+                <li>Rejestracja i logowanie użytkowników</li>
+                <li>Dodawanie i przeglądanie ogłoszeń firm paintballowych</li>
+                <li>Blogi użytkowników i poradniki</li>
+                <li>Forum społecznościowe</li>
+                <li>System punktowy i ranking graczy</li>
+                <li>Kalendarz rezerwacji terminów</li>
+                <li>Mapa z lokalizacjami gier</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Planowany rozwój -->
+    <section id="rozwoj" class="container fade-in">
+        <div class="project-details">
+            <h2>Plan rozwoju</h2>
+            <ul>
+                <li>Wdrożenie CI/CD z GitHub Actions</li>
+                <li>Konteneryzacja z Dockerem</li>
+                <li>Monitoring i logowanie (Prometheus + Grafana)</li>
+                <li>Rozszerzenie API do aplikacji mobilnej</li>
+                <li>Sklep online ze
