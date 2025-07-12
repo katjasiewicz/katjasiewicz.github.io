@@ -3,238 +3,182 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Terminalowe Portfolio - Pulpit</title>
+<title>Desktop Style Portfolio</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
-
-  /* Tło pulpitu */
+  /* Tapeta tła */
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(135deg, #0a1a0a, #003300);
-    font-family: 'Share Tech Mono', monospace;
-    color: #00ff00;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-
-  /* Okno terminala */
-  #terminal-window {
-    background: #000;
-    border: 3px solid #00ff00;
-    border-radius: 8px;
-    width: 700px;
-    height: 350px;
-    box-shadow: 0 0 15px #00ff00aa;
-    display: flex;
-    flex-direction: column;
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Consolas', monospace, monospace;
+    color: #33ff33;
     overflow: hidden;
   }
 
-  /* Pasek tytułu okna */
-  #terminal-titlebar {
-    background: #003300;
-    color: #00ff00;
-    padding: 6px 12px;
-    font-weight: bold;
-    user-select: none;
-    border-bottom: 2px solid #00ff00;
-  }
-
-  /* Obszar terminala */
-  #terminal {
-    flex-grow: 1;
-    padding: 12px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-  }
-
-  /* Linia z inputem */
-  #input-line {
+  /* Pasek na dole */
+  #taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    background: #111;
+    border-top: 2px solid #33ff33;
     display: flex;
     align-items: center;
-    padding: 6px 12px;
-    border-top: 2px solid #00ff00;
-    background: #001a00;
+    padding: 0 10px;
+    box-sizing: border-box;
+    color: #33ff33;
+    font-size: 14px;
   }
 
-  #prompt {
-    user-select: none;
-    margin-right: 8px;
-  }
-
-  #cmdline {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #00ff00;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 1.1em;
-    flex-grow: 1;
-  }
-
-  /* Migający kursor */
-  #cmdline:focus {
-    caret-color: #00ff00;
-  }
-  #cmdline::placeholder {
-    color: #00ff00aa;
-  }
-
-  /* Scrollbar terminala */
-  #terminal::-webkit-scrollbar {
-    width: 8px;
-  }
-  #terminal::-webkit-scrollbar-track {
-    background: #000;
-  }
-  #terminal::-webkit-scrollbar-thumb {
-    background: #00ff00aa;
-    border-radius: 4px;
-  }
-
-  /* Pulpit z ikonkami */
-  #desktop {
-    margin-top: 30px;
-    width: 700px;
+  /* Foldery na pulpicie - po prawej */
+  #desktop-icons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
     display: flex;
-    gap: 30px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 20px;
   }
-
-  .icon {
+  .folder {
+    cursor: pointer;
     width: 80px;
     text-align: center;
-    cursor: pointer;
+  }
+  .folder-icon {
+    font-size: 48px;
+    user-select: none;
+    transition: color 0.3s;
+  }
+  .folder:hover .folder-icon {
+    color: #66ff66;
+  }
+  .folder-label {
+    margin-top: 5px;
+    font-size: 14px;
+  }
+
+  /* Okno - projekty */
+  #projects-window {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 300px;
+    background: rgba(0,0,0,0.9);
+    border: 2px solid #33ff33;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #33ff33;
+    display: none;
+    flex-direction: column;
+    color: #33ff33;
+    z-index: 100;
+  }
+
+  /* Pasek okna */
+  #projects-window-header {
+    padding: 8px 12px;
+    background: #111;
+    border-bottom: 1px solid #33ff33;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     user-select: none;
   }
-
-  .icon img {
-    width: 64px;
-    height: 64px;
+  #projects-window-header button {
+    background: #33ff33;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+  }
+  #projects-window-header button:hover {
+    background: #66ff66;
   }
 
-  .icon-label {
-    margin-top: 6px;
-    font-size: 0.9em;
+  /* Zawartość okna */
+  #projects-window-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
   }
-
-  .icon:hover .icon-label {
-    color: #00ff00;
-    text-decoration: underline;
+  .project-item {
+    padding: 8px;
+    border: 1px solid #33ff33;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
   }
-
-  a {
-    color: #0f0;
-    text-decoration: underline;
+  .project-item:hover {
+    background: #225522;
   }
 </style>
 </head>
 <body>
 
-  <div id="terminal-window" role="main" aria-label="Terminal portfolio">
-    <div id="terminal-titlebar">Terminal</div>
-    <div id="terminal"></div>
-    <div id="input-line">
-      <span id="prompt">&gt;</span>
-      <input id="cmdline" autocomplete="off" autofocus placeholder="Wpisz 'help' i naciśnij Enter" />
-    </div>
+<!-- Foldery na pulpicie -->
+<div id="desktop-icons">
+  <div class="folder" id="folder-projects" title="Projekty">
+    <div class="folder-icon">📁</div>
+    <div class="folder-label">Projekty</div>
   </div>
+  <!-- Możesz dodać więcej folderów tutaj -->
+</div>
 
-  <div id="desktop" aria-label="Pulpit z ikonami projektów">
-    <div class="icon" tabindex="0" onclick="openProject('paintball')">
-      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
-      <div class="icon-label">Paintball</div>
-    </div>
-    <div class="icon" tabindex="0" onclick="alert('Projekt Flask w przygotowaniu!')">
-      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
-      <div class="icon-label">Flask App</div>
-    </div>
-    <div class="icon" tabindex="0" onclick="alert('Projekt ASP.NET w przygotowaniu!')">
-      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
-      <div class="icon-label">ASP.NET App</div>
-    </div>
+<!-- Okno projekty -->
+<div id="projects-window">
+  <div id="projects-window-header">
+    Projekty
+    <button id="close-projects">X</button>
   </div>
+  <div id="projects-window-content">
+    <div class="project-item" data-name="Paintball Platform">Platforma do Rezerwacji Gier Paintballowych</div>
+    <div class="project-item" data-name="Flask App">Aplikacja we Flask</div>
+    <div class="project-item" data-name="ASP.NET App">Aplikacja w ASP.NET</div>
+  </div>
+</div>
+
+<!-- Pasek zadań -->
+<div id="taskbar">
+  Desktop Portfolio | { <span id="clock"></span> }
+</div>
 
 <script>
-  const output = document.getElementById('terminal');
-  const input = document.getElementById('cmdline');
+  // Pokazanie i ukrycie okna po kliknięciu folderu
+  const folderProjects = document.getElementById('folder-projects');
+  const projectsWindow = document.getElementById('projects-window');
+  const closeProjectsBtn = document.getElementById('close-projects');
 
-  const commands = {
-    help: `Dostępne komendy:
-help         - pokaż dostępne komendy
-about        - o mnie
-projects     - lista projektów
-open paintball - otwórz opis projektu Laravel Paintball Platform`,
-
-    about: `Cześć! Jestem pasjonatem DevOps i architektury systemów.
-Pracuję z Laravel, Flask, CI/CD, Dockerem i wiele więcej.
-Zapraszam do sprawdzenia moich projektów!`,
-
-    projects: `Moje projekty:
-- paintball: Platforma do wyszukiwania i rezerwacji gier paintballowych (Laravel)
-- flask-app: Aplikacja w Flask z CI/CD
-- aspnet-app: Aplikacja w C# / ASP.NET
-Wpisz 'open paintball', aby zobaczyć szczegóły projektu paintball.`,
-
-    'open paintball': `Projekt Laravel - Paintball Platform
-
-Opis:
-Platforma do wyszukiwania i rezerwacji gier dla społeczności paintballowej.
-Funkcje: ogłoszenia firm, blogi użytkowników, forum, ranking, kalendarz, mapa miejsc.
-
-Technologie:
-- Backend: PHP Laravel 11.5 z Breeze, Blade i Pest (testy)
-- Baza danych: MySQL
-- Frontend: HTML, CSS, JavaScript
-
-[GitHub repo](https://github.com/twojuser/paintball-platform)`
-  };
-
-  function printOutput(text) {
-    const withLinks = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-    output.innerHTML += withLinks + '\n\n';
-    output.scrollTop = output.scrollHeight;
-  }
-
-  function processCommand(cmd) {
-    const command = cmd.trim().toLowerCase();
-    if (commands[command]) {
-      printOutput(commands[command]);
-    } else if (command === '') {
-      // nic
-    } else {
-      printOutput(`Nieznana komenda: '${cmd}'. Wpisz 'help' aby zobaczyć listę komend.`);
-    }
-  }
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const cmd = input.value;
-      printOutput(`> ${cmd}`);
-      processCommand(cmd);
-      input.value = '';
-    }
+  folderProjects.addEventListener('click', () => {
+    projectsWindow.style.display = 'flex';
+  });
+  closeProjectsBtn.addEventListener('click', () => {
+    projectsWindow.style.display = 'none';
   });
 
-  window.onload = () => {
-    printOutput('Witaj w terminalowym portfolio!\nWpisz "help", aby rozpocząć.');
-    input.focus();
-  };
+  // Obsługa kliknięcia projektu
+  document.querySelectorAll('.project-item').forEach(item => {
+    item.addEventListener('click', () => {
+      alert('Kliknięto projekt: ' + item.dataset.name + '\nTutaj możesz dodać opis lub przejść do podstrony.');
+    });
+  });
 
-  function openProject(name) {
-    if (name === 'paintball') {
-      printOutput(commands['open paintball']);
-      // można dodać np. scroll do terminala
-      output.scrollTop = output.scrollHeight;
-      input.focus();
-    } else {
-      printOutput(`Projekt ${name} w przygotowaniu.`);
-    }
+  // Zegar na pasku
+  function updateClock() {
+    const clock = document.getElementById('clock');
+    const now = new Date();
+    clock.textContent = now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
   }
+  setInterval(updateClock, 1000);
+  updateClock();
 </script>
 
 </body>
