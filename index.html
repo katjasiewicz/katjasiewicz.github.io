@@ -3,44 +3,69 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Terminalowe Portfolio</title>
+<title>Terminalowe Portfolio - Pulpit</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  /* Tło pulpitu */
   body {
-    margin: 0; 
-    background: #000;
-    color: #00ff00;
-    font-family: 'Share Tech Mono', monospace;
+    margin: 0;
     height: 100vh;
-    display: flex; 
+    background: linear-gradient(135deg, #0a1a0a, #003300);
+    font-family: 'Share Tech Mono', monospace;
+    color: #00ff00;
+    display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Okno terminala */
+  #terminal-window {
+    background: #000;
+    border: 3px solid #00ff00;
+    border-radius: 8px;
+    width: 700px;
+    height: 350px;
+    box-shadow: 0 0 15px #00ff00aa;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
   }
+
+  /* Pasek tytułu okna */
+  #terminal-titlebar {
+    background: #003300;
+    color: #00ff00;
+    padding: 6px 12px;
+    font-weight: bold;
+    user-select: none;
+    border-bottom: 2px solid #00ff00;
+  }
+
+  /* Obszar terminala */
   #terminal {
-    background: #000;
-    border: 2px solid #00ff00;
-    border-radius: 6px;
-    width: 90vw;
-    max-width: 800px;
-    height: 400px;
-    padding: 15px;
-    box-sizing: border-box;
+    flex-grow: 1;
+    padding: 12px;
     overflow-y: auto;
-    box-shadow: 0 0 20px #00ff00aa;
-  }
-  #output {
     white-space: pre-wrap;
-    margin-bottom: 10px;
   }
+
+  /* Linia z inputem */
   #input-line {
     display: flex;
     align-items: center;
+    padding: 6px 12px;
+    border-top: 2px solid #00ff00;
+    background: #001a00;
   }
+
   #prompt {
     user-select: none;
+    margin-right: 8px;
   }
+
   #cmdline {
     background: transparent;
     border: none;
@@ -50,6 +75,7 @@
     font-size: 1.1em;
     flex-grow: 1;
   }
+
   /* Migający kursor */
   #cmdline:focus {
     caret-color: #00ff00;
@@ -57,7 +83,8 @@
   #cmdline::placeholder {
     color: #00ff00aa;
   }
-  /* Scrollbar dla terminala */
+
+  /* Scrollbar terminala */
   #terminal::-webkit-scrollbar {
     width: 8px;
   }
@@ -68,6 +95,38 @@
     background: #00ff00aa;
     border-radius: 4px;
   }
+
+  /* Pulpit z ikonkami */
+  #desktop {
+    margin-top: 30px;
+    width: 700px;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .icon {
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .icon img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .icon-label {
+    margin-top: 6px;
+    font-size: 0.9em;
+  }
+
+  .icon:hover .icon-label {
+    color: #00ff00;
+    text-decoration: underline;
+  }
+
   a {
     color: #0f0;
     text-decoration: underline;
@@ -76,16 +135,32 @@
 </head>
 <body>
 
-<div id="terminal" role="main" aria-label="Terminal portfolio">
-  <div id="output"></div>
-  <div id="input-line">
-    <span id="prompt">&gt; </span>
-    <input id="cmdline" autocomplete="off" autofocus placeholder="Wpisz 'help' i naciśnij Enter" />
+  <div id="terminal-window" role="main" aria-label="Terminal portfolio">
+    <div id="terminal-titlebar">Terminal</div>
+    <div id="terminal"></div>
+    <div id="input-line">
+      <span id="prompt">&gt;</span>
+      <input id="cmdline" autocomplete="off" autofocus placeholder="Wpisz 'help' i naciśnij Enter" />
+    </div>
   </div>
-</div>
+
+  <div id="desktop" aria-label="Pulpit z ikonami projektów">
+    <div class="icon" tabindex="0" onclick="openProject('paintball')">
+      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
+      <div class="icon-label">Paintball</div>
+    </div>
+    <div class="icon" tabindex="0" onclick="alert('Projekt Flask w przygotowaniu!')">
+      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
+      <div class="icon-label">Flask App</div>
+    </div>
+    <div class="icon" tabindex="0" onclick="alert('Projekt ASP.NET w przygotowaniu!')">
+      <img src="https://img.icons8.com/fluency/48/000000/folder-invoices.png" alt="Folder projekty"/>
+      <div class="icon-label">ASP.NET App</div>
+    </div>
+  </div>
 
 <script>
-  const output = document.getElementById('output');
+  const output = document.getElementById('terminal');
   const input = document.getElementById('cmdline');
 
   const commands = {
@@ -94,7 +169,7 @@ help         - pokaż dostępne komendy
 about        - o mnie
 projects     - lista projektów
 open paintball - otwórz opis projektu Laravel Paintball Platform`,
-    
+
     about: `Cześć! Jestem pasjonatem DevOps i architektury systemów.
 Pracuję z Laravel, Flask, CI/CD, Dockerem i wiele więcej.
 Zapraszam do sprawdzenia moich projektów!`,
@@ -104,7 +179,7 @@ Zapraszam do sprawdzenia moich projektów!`,
 - flask-app: Aplikacja w Flask z CI/CD
 - aspnet-app: Aplikacja w C# / ASP.NET
 Wpisz 'open paintball', aby zobaczyć szczegóły projektu paintball.`,
-    
+
     'open paintball': `Projekt Laravel - Paintball Platform
 
 Opis:
@@ -116,11 +191,10 @@ Technologie:
 - Baza danych: MySQL
 - Frontend: HTML, CSS, JavaScript
 
-[GitHub repo](https://github.com/twojuser/paintball-platform)  (podmień link!)`
+[GitHub repo](https://github.com/twojuser/paintball-platform)`
   };
 
   function printOutput(text) {
-    // Zamiana linków na klikalne a
     const withLinks = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     output.innerHTML += withLinks + '\n\n';
     output.scrollTop = output.scrollHeight;
@@ -131,7 +205,7 @@ Technologie:
     if (commands[command]) {
       printOutput(commands[command]);
     } else if (command === '') {
-      // nic nie robimy przy pustej komendzie
+      // nic
     } else {
       printOutput(`Nieznana komenda: '${cmd}'. Wpisz 'help' aby zobaczyć listę komend.`);
     }
@@ -146,11 +220,21 @@ Technologie:
     }
   });
 
-  // Po załadowaniu pokaż intro
   window.onload = () => {
     printOutput('Witaj w terminalowym portfolio!\nWpisz "help", aby rozpocząć.');
     input.focus();
   };
+
+  function openProject(name) {
+    if (name === 'paintball') {
+      printOutput(commands['open paintball']);
+      // można dodać np. scroll do terminala
+      output.scrollTop = output.scrollHeight;
+      input.focus();
+    } else {
+      printOutput(`Projekt ${name} w przygotowaniu.`);
+    }
+  }
 </script>
 
 </body>
