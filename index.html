@@ -1,212 +1,157 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moje Kreatywne CV</title>
-    <style>
-        /* Ustawienia tła z gradientem w zieleni */
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
-            color: #fff;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        /* Stylizacja kontenera sekcji */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Nagłówki */
-        h1, h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        /* Nawigacja jako sticky navbar */
-        .nav {
-            position: sticky;
-            top: 0;
-            background-color: #334433;
-            padding: 10px 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-        }
-        .nav a {
-            color: #fff;
-            text-decoration: none;
-            margin-left: 15px;
-            padding: 10px 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-        .nav a:hover {
-            background: rgba(0, 0, 0, 0.4);
-        }
-
-        /* Sekcje strony */
-        section {
-            padding: 100px 0;
-            text-align: center;
-        }
-
-        #about {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        /* Stylizacja kart projektów */
-        .project-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 15px;
-            margin: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        /* Animacje wejścia */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Stylizacja sekcji z referencjami */
-        #testimonials {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 20px auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        /* Sekcja pasji */
-        #hobbies {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 20px auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-        #skills {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 20px auto;
-            max-width: 800px;
-            text-align: center;
-        }
-
-
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Terminalowe Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  body {
+    margin: 0; 
+    background: #000;
+    color: #00ff00;
+    font-family: 'Share Tech Mono', monospace;
+    height: 100vh;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  #terminal {
+    background: #000;
+    border: 2px solid #00ff00;
+    border-radius: 6px;
+    width: 90vw;
+    max-width: 800px;
+    height: 400px;
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    box-shadow: 0 0 20px #00ff00aa;
+  }
+  #output {
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+  }
+  #input-line {
+    display: flex;
+    align-items: center;
+  }
+  #prompt {
+    user-select: none;
+  }
+  #cmdline {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #00ff00;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.1em;
+    flex-grow: 1;
+  }
+  /* Migający kursor */
+  #cmdline:focus {
+    caret-color: #00ff00;
+  }
+  #cmdline::placeholder {
+    color: #00ff00aa;
+  }
+  /* Scrollbar dla terminala */
+  #terminal::-webkit-scrollbar {
+    width: 8px;
+  }
+  #terminal::-webkit-scrollbar-track {
+    background: #000;
+  }
+  #terminal::-webkit-scrollbar-thumb {
+    background: #00ff00aa;
+    border-radius: 4px;
+  }
+  a {
+    color: #0f0;
+    text-decoration: underline;
+  }
+</style>
 </head>
 <body>
 
-    <!-- Nawigacja -->
-    <div class="nav">
-        <a href="#about">O mnie</a>
-        <a href="#skills">Umiejętności</a>
-        <a href="#projects">Projekty</a>
-        <a href="#testimonials">Referencje</a>
-        <a href="#hobbies">Pasje</a>
-        <a href="#contact">Kontakt</a>
-    </div>
+<div id="terminal" role="main" aria-label="Terminal portfolio">
+  <div id="output"></div>
+  <div id="input-line">
+    <span id="prompt">&gt; </span>
+    <input id="cmdline" autocomplete="off" autofocus placeholder="Wpisz 'help' i naciśnij Enter" />
+  </div>
+</div>
 
-    <!-- Sekcja: O mnie -->
-    <section id="about" class="container fade-in">
-        <h1>Moje Imię i Nazwisko</h1>
-        <p>Jestem pasjonatem programowania z doświadczeniem w technologiach webowych. Uwielbiam tworzyć dynamiczne i responsywne aplikacje z wykorzystaniem najnowszych technologii.</p>
-    </section>
+<script>
+  const output = document.getElementById('output');
+  const input = document.getElementById('cmdline');
 
-    <!-- Sekcja: Umiejętności -->
-    <section id="skills" class="container fade-in">
-        <h2>Umiejętności</h2>
-        <p>HTML, CSS, JavaScript, React, Vue, Python, PHP, Laravel</p>
-    </section>
+  const commands = {
+    help: `Dostępne komendy:
+help         - pokaż dostępne komendy
+about        - o mnie
+projects     - lista projektów
+open paintball - otwórz opis projektu Laravel Paintball Platform`,
+    
+    about: `Cześć! Jestem pasjonatem DevOps i architektury systemów.
+Pracuję z Laravel, Flask, CI/CD, Dockerem i wiele więcej.
+Zapraszam do sprawdzenia moich projektów!`,
 
-    <!-- Sekcja: Projekty -->
-<section id="projects" class="container fade-in">
-    <h2>Projekty</h2>
-    <div class="project-grid">
-        <div class="project-card">
-            <h3>Paintball Platform (Laravel)</h3>
-            <p>Aplikacja do rezerwacji i ogłoszeń dla społeczności paintballowej. Laravel, MySQL, Blade, Breeze.</p>
-            <a href="paintball.html" style="color: #fff; text-decoration: underline;">Zobacz więcej</a>
-        </div>
-        <div class="project-card">
-            <h3>Projekt 2</h3>
-            <p>Opis mojego drugiego projektu. Możesz zobaczyć więcej na GitHubie.</p>
-        </div>
-        <div class="project-card">
-            <h3>Projekt 3</h3>
-            <p>Opis mojego trzeciego projektu. Kliknij, aby zobaczyć kod na GitHubie.</p>
-        </div>
-    </div>
-</section>
+    projects: `Moje projekty:
+- paintball: Platforma do wyszukiwania i rezerwacji gier paintballowych (Laravel)
+- flask-app: Aplikacja w Flask z CI/CD
+- aspnet-app: Aplikacja w C# / ASP.NET
+Wpisz 'open paintball', aby zobaczyć szczegóły projektu paintball.`,
+    
+    'open paintball': `Projekt Laravel - Paintball Platform
 
+Opis:
+Platforma do wyszukiwania i rezerwacji gier dla społeczności paintballowej.
+Funkcje: ogłoszenia firm, blogi użytkowników, forum, ranking, kalendarz, mapa miejsc.
 
-    <!-- Sekcja: Referencje -->
-    <section id="testimonials" class="container fade-in">
-        <h2>Referencje</h2>
-        <p>"Pracowałem z [Twoje Imię] nad wieloma projektami i zawsze dostarczał świetną jakość!" - Klient</p>
-        <p>"Doskonały programista, który zawsze znajduje najlepsze rozwiązania!" - Kolega</p>
-    </section>
+Technologie:
+- Backend: PHP Laravel 11.5 z Breeze, Blade i Pest (testy)
+- Baza danych: MySQL
+- Frontend: HTML, CSS, JavaScript
 
-    <!-- Sekcja: Pasje -->
-    <section id="hobbies" class="container fade-in">
-        <h2>Pasje</h2>
-        <p>Interesuję się programowaniem, sztuką, podróżami oraz nowymi technologiami.</p>
-    </section>
+[GitHub repo](https://github.com/twojuser/paintball-platform)  (podmień link!)`
+  };
 
-    <!-- Sekcja: Kontakt -->
-    <section id="contact" class="container fade-in">
-        <h2>Kontakt</h2>
-        <p>Jeśli chcesz się ze mną skontaktować, wypełnij formularz Google: </p>
-        <a href="https://forms.gle/ARXuqpVjoJ31wS7d7" target="_blank" style="color: #334433; text-decoration: underline;">Formularz Kontaktowy</a>
-    </section>
+  function printOutput(text) {
+    // Zamiana linków na klikalne a
+    const withLinks = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+    output.innerHTML += withLinks + '\n\n';
+    output.scrollTop = output.scrollHeight;
+  }
 
-    <script>
-        // Animacja wchodzenia elementów podczas przewijania
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show');
-                }
-            });
-        });
+  function processCommand(cmd) {
+    const command = cmd.trim().toLowerCase();
+    if (commands[command]) {
+      printOutput(commands[command]);
+    } else if (command === '') {
+      // nic nie robimy przy pustej komendzie
+    } else {
+      printOutput(`Nieznana komenda: '${cmd}'. Wpisz 'help' aby zobaczyć listę komend.`);
+    }
+  }
 
-        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-    </script>
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const cmd = input.value;
+      printOutput(`> ${cmd}`);
+      processCommand(cmd);
+      input.value = '';
+    }
+  });
+
+  // Po załadowaniu pokaż intro
+  window.onload = () => {
+    printOutput('Witaj w terminalowym portfolio!\nWpisz "help", aby rozpocząć.');
+    input.focus();
+  };
+</script>
 
 </body>
 </html>
