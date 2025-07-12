@@ -5,18 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Desktop Style Portfolio z Konsolą</title>
 <style>
-  /* Białe tło z konstelacjami: punkty i linie w niebieskich odcieniach */
   body {
     margin: 0;
     height: 100vh;
-    background: #f0f8ff; /* jasny błękit/białe tło */
+    background: #f0f8ff;
     font-family: 'Consolas', monospace, monospace;
     color: #003366;
     overflow: hidden;
     position: relative;
   }
 
-  /* Canvas na tło konstelacji */
   #constellation-bg {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -24,7 +22,6 @@
     z-index: 0;
   }
 
-  /* Pasek na dole */
   #taskbar {
     position: fixed;
     bottom: 0;
@@ -42,7 +39,6 @@
     z-index: 10;
   }
 
-  /* Foldery na pulpicie - po prawej */
   #desktop-icons {
     position: fixed;
     top: 80px;
@@ -71,7 +67,6 @@
     font-size: 14px;
   }
 
-  /* Okno konsoli (terminal) w lewym górnym rogu */
   #terminal-window {
     position: fixed;
     top: 20px;
@@ -122,7 +117,18 @@
     white-space: pre-wrap;
   }
 
-  /* Okno - projekty */
+  /* Input do wpisywania komend */
+  #terminal-input {
+    border-top: 1px solid #3399ff;
+    background: #002244;
+    padding: 10px 15px;
+    font-family: 'Consolas', monospace;
+    color: #99ccff;
+    outline: none;
+    border: none;
+    font-size: 14px;
+  }
+
   #projects-window {
     position: fixed;
     top: 100px;
@@ -139,7 +145,6 @@
     z-index: 20;
   }
 
-  /* Pasek okna */
   #projects-window-header {
     padding: 8px 12px;
     background: #cce6ff;
@@ -164,7 +169,6 @@
     background: #66b2ff;
   }
 
-  /* Zawartość okna */
   #projects-window-content {
     padding: 15px;
     overflow-y: auto;
@@ -185,33 +189,29 @@
 </head>
 <body>
 
-<!-- Canvas z konstelacjami -->
 <canvas id="constellation-bg"></canvas>
 
-<!-- Foldery na pulpicie -->
 <div id="desktop-icons">
   <div class="folder" id="folder-projects" title="Projekty">
     <div class="folder-icon">📁</div>
     <div class="folder-label">Projekty</div>
   </div>
-  <!-- Możesz dodać więcej folderów -->
 </div>
 
-<!-- Okno konsoli -->
 <div id="terminal-window">
   <div id="terminal-header">
     Terminal
     <button id="close-terminal">×</button>
   </div>
-  <div id="terminal-content">
+  <div id="terminal-content" tabindex="0">
     <pre>> echo "Witaj w moim portfolio!"</pre>
     <pre>Witaj w moim portfolio!</pre>
     <pre>> ls projekty/</pre>
     <pre>PaintballPlatform  FlaskApp  ASPNetApp</pre>
   </div>
+  <input type="text" id="terminal-input" placeholder="Wpisz komendę i naciśnij Enter" autocomplete="off" autofocus />
 </div>
 
-<!-- Okno projekty -->
 <div id="projects-window">
   <div id="projects-window-header">
     Projekty
@@ -224,13 +224,11 @@
   </div>
 </div>
 
-<!-- Pasek zadań -->
 <div id="taskbar">
   Desktop Portfolio | { <span id="clock"></span> }
 </div>
 
 <script>
-  // Pokazanie i ukrycie okna projekty po kliknięciu folderu
   const folderProjects = document.getElementById('folder-projects');
   const projectsWindow = document.getElementById('projects-window');
   const closeProjectsBtn = document.getElementById('close-projects');
@@ -242,21 +240,18 @@
     projectsWindow.style.display = 'none';
   });
 
-  // Zamykanie okna terminal
   const terminalWindow = document.getElementById('terminal-window');
   const closeTerminalBtn = document.getElementById('close-terminal');
   closeTerminalBtn.addEventListener('click', () => {
     terminalWindow.style.display = 'none';
   });
 
-  // Obsługa kliknięcia projektu
   document.querySelectorAll('.project-item').forEach(item => {
     item.addEventListener('click', () => {
       alert('Kliknięto projekt: ' + item.dataset.name + '\nTutaj możesz dodać opis lub przejść do podstrony.');
     });
   });
 
-  // Zegar na pasku
   function updateClock() {
     const clock = document.getElementById('clock');
     const now = new Date();
@@ -265,7 +260,7 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // Rysowanie konstelacji na canvas
+  // Konstelacje canvas
   const canvas = document.getElementById('constellation-bg');
   const ctx = canvas.getContext('2d');
   let width, height;
@@ -278,7 +273,6 @@
     canvas.height = height;
 
     points = [];
-    // Wygeneruj losowe punkty (gwiazdy)
     const numPoints = 60;
     for(let i=0; i<numPoints; i++) {
       points.push({
@@ -289,7 +283,6 @@
       });
     }
 
-    // Połącz punkty liniami jeśli są blisko
     const maxDistance = 150;
     for(let i=0; i<points.length; i++) {
       for(let j=i+1; j<points.length; j++) {
@@ -310,7 +303,6 @@
     ctx.strokeStyle = '#3399ff';
     ctx.lineWidth = 0.5;
 
-    // Rysuj połączenia
     for(let i=0; i<points.length; i++) {
       const p = points[i];
       for(const ci of p.connections) {
@@ -321,7 +313,6 @@
         ctx.stroke();
       }
     }
-    // Rysuj punkty
     for(const p of points) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.radius, 0, 2*Math.PI);
@@ -342,6 +333,46 @@
   resize();
   animate();
 
+  // Obsługa terminal input
+  const terminalContent = document.getElementById('terminal-content');
+  const terminalInput = document.getElementById('terminal-input');
+
+  terminalInput.addEventListener('keydown', function(e) {
+    if(e.key === 'Enter') {
+      const cmd = terminalInput.value.trim();
+      if(cmd) {
+        processCommand(cmd);
+      }
+      terminalInput.value = '';
+    }
+  });
+
+  function processCommand(cmd) {
+    appendLine(`> ${cmd}`);
+    switch(cmd.toLowerCase()) {
+      case 'help':
+        appendLine("Dostępne komendy:\nhelp - lista komend\nls projekty - lista projektów\nclear - wyczyść terminal\nexit - ukryj terminal");
+        break;
+      case 'ls projekty':
+        appendLine("PaintballPlatform  FlaskApp  ASPNetApp");
+        break;
+      case 'clear':
+        terminalContent.innerHTML = '';
+        break;
+      case 'exit':
+        terminalWindow.style.display = 'none';
+        break;
+      default:
+        appendLine(`Nieznana komenda: ${cmd}`);
+    }
+    terminalContent.scrollTop = terminalContent.scrollHeight;
+  }
+
+  function appendLine(text) {
+    const pre = document.createElement('pre');
+    pre.textContent = text;
+    terminalContent.appendChild(pre);
+  }
 </script>
 
 </body>
