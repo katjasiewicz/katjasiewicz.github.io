@@ -3,17 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Desktop Style Portfolio</title>
+<title>Desktop Style Portfolio z Konsolą</title>
 <style>
-  /* Tapeta tła */
+  /* Białe tło z konstelacjami: punkty i linie w niebieskich odcieniach */
   body {
     margin: 0;
     height: 100vh;
-    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
-    background-size: cover;
+    background: #f0f8ff; /* jasny błękit/białe tło */
     font-family: 'Consolas', monospace, monospace;
-    color: #33ff33;
+    color: #003366;
     overflow: hidden;
+    position: relative;
+  }
+
+  /* Canvas na tło konstelacji */
+  #constellation-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 0;
   }
 
   /* Pasek na dole */
@@ -23,66 +31,119 @@
     left: 0;
     height: 40px;
     width: 100%;
-    background: #111;
-    border-top: 2px solid #33ff33;
+    background: #001f3f;
+    border-top: 2px solid #3399ff;
     display: flex;
     align-items: center;
     padding: 0 10px;
     box-sizing: border-box;
-    color: #33ff33;
+    color: #99ccff;
     font-size: 14px;
+    z-index: 10;
   }
 
   /* Foldery na pulpicie - po prawej */
   #desktop-icons {
     position: fixed;
-    top: 20px;
+    top: 80px;
     right: 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    z-index: 10;
   }
   .folder {
     cursor: pointer;
     width: 80px;
     text-align: center;
+    user-select: none;
   }
   .folder-icon {
     font-size: 48px;
-    user-select: none;
+    color: #0066cc;
     transition: color 0.3s;
   }
   .folder:hover .folder-icon {
-    color: #66ff66;
+    color: #3399ff;
   }
   .folder-label {
     margin-top: 5px;
     font-size: 14px;
   }
 
+  /* Okno konsoli (terminal) w lewym górnym rogu */
+  #terminal-window {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 65vw;
+    height: 65vh;
+    background: #001f3f;
+    border: 2px solid #3399ff;
+    border-radius: 8px;
+    box-shadow: 0 0 20px #3399ffaa;
+    color: #99ccff;
+    display: flex;
+    flex-direction: column;
+    z-index: 20;
+  }
+
+  #terminal-header {
+    background: #003366;
+    padding: 10px 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #3399ff;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #terminal-header button {
+    background: #3399ff;
+    border: none;
+    color: #001f3f;
+    font-weight: bold;
+    cursor: pointer;
+    width: 30px;
+    height: 25px;
+    border-radius: 3px;
+  }
+  #terminal-header button:hover {
+    background: #66b2ff;
+  }
+
+  #terminal-content {
+    flex-grow: 1;
+    padding: 15px;
+    background: #001f3f;
+    font-size: 14px;
+    overflow-y: auto;
+    font-family: 'Source Code Pro', monospace, monospace;
+    white-space: pre-wrap;
+  }
+
   /* Okno - projekty */
   #projects-window {
     position: fixed;
     top: 100px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 20px;
     width: 400px;
     height: 300px;
-    background: rgba(0,0,0,0.9);
-    border: 2px solid #33ff33;
+    background: rgba(255 255 255 / 0.95);
+    border: 2px solid #3399ff;
     border-radius: 8px;
-    box-shadow: 0 0 20px #33ff33;
+    box-shadow: 0 0 20px #3399ffaa;
     display: none;
     flex-direction: column;
-    color: #33ff33;
-    z-index: 100;
+    color: #003366;
+    z-index: 20;
   }
 
   /* Pasek okna */
   #projects-window-header {
     padding: 8px 12px;
-    background: #111;
-    border-bottom: 1px solid #33ff33;
+    background: #cce6ff;
+    border-bottom: 1px solid #3399ff;
     font-weight: bold;
     display: flex;
     justify-content: space-between;
@@ -90,9 +151,9 @@
     user-select: none;
   }
   #projects-window-header button {
-    background: #33ff33;
+    background: #3399ff;
     border: none;
-    color: #000;
+    color: #001f3f;
     font-weight: bold;
     cursor: pointer;
     width: 25px;
@@ -100,7 +161,7 @@
     border-radius: 3px;
   }
   #projects-window-header button:hover {
-    background: #66ff66;
+    background: #66b2ff;
   }
 
   /* Zawartość okna */
@@ -111,18 +172,21 @@
   }
   .project-item {
     padding: 8px;
-    border: 1px solid #33ff33;
+    border: 1px solid #3399ff;
     margin-bottom: 10px;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.2s;
   }
   .project-item:hover {
-    background: #225522;
+    background: #cce6ff;
   }
 </style>
 </head>
 <body>
+
+<!-- Canvas z konstelacjami -->
+<canvas id="constellation-bg"></canvas>
 
 <!-- Foldery na pulpicie -->
 <div id="desktop-icons">
@@ -130,14 +194,28 @@
     <div class="folder-icon">📁</div>
     <div class="folder-label">Projekty</div>
   </div>
-  <!-- Możesz dodać więcej folderów tutaj -->
+  <!-- Możesz dodać więcej folderów -->
+</div>
+
+<!-- Okno konsoli -->
+<div id="terminal-window">
+  <div id="terminal-header">
+    Terminal
+    <button id="close-terminal">×</button>
+  </div>
+  <div id="terminal-content">
+    <pre>> echo "Witaj w moim portfolio!"</pre>
+    <pre>Witaj w moim portfolio!</pre>
+    <pre>> ls projekty/</pre>
+    <pre>PaintballPlatform  FlaskApp  ASPNetApp</pre>
+  </div>
 </div>
 
 <!-- Okno projekty -->
 <div id="projects-window">
   <div id="projects-window-header">
     Projekty
-    <button id="close-projects">X</button>
+    <button id="close-projects">×</button>
   </div>
   <div id="projects-window-content">
     <div class="project-item" data-name="Paintball Platform">Platforma do Rezerwacji Gier Paintballowych</div>
@@ -152,7 +230,7 @@
 </div>
 
 <script>
-  // Pokazanie i ukrycie okna po kliknięciu folderu
+  // Pokazanie i ukrycie okna projekty po kliknięciu folderu
   const folderProjects = document.getElementById('folder-projects');
   const projectsWindow = document.getElementById('projects-window');
   const closeProjectsBtn = document.getElementById('close-projects');
@@ -162,6 +240,13 @@
   });
   closeProjectsBtn.addEventListener('click', () => {
     projectsWindow.style.display = 'none';
+  });
+
+  // Zamykanie okna terminal
+  const terminalWindow = document.getElementById('terminal-window');
+  const closeTerminalBtn = document.getElementById('close-terminal');
+  closeTerminalBtn.addEventListener('click', () => {
+    terminalWindow.style.display = 'none';
   });
 
   // Obsługa kliknięcia projektu
@@ -179,6 +264,84 @@
   }
   setInterval(updateClock, 1000);
   updateClock();
+
+  // Rysowanie konstelacji na canvas
+  const canvas = document.getElementById('constellation-bg');
+  const ctx = canvas.getContext('2d');
+  let width, height;
+  let points = [];
+
+  function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    points = [];
+    // Wygeneruj losowe punkty (gwiazdy)
+    const numPoints = 60;
+    for(let i=0; i<numPoints; i++) {
+      points.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        radius: 1 + Math.random() * 2,
+        connections: []
+      });
+    }
+
+    // Połącz punkty liniami jeśli są blisko
+    const maxDistance = 150;
+    for(let i=0; i<points.length; i++) {
+      for(let j=i+1; j<points.length; j++) {
+        let dx = points[i].x - points[j].x;
+        let dy = points[i].y - points[j].y;
+        let dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < maxDistance) {
+          points[i].connections.push(j);
+          points[j].connections.push(i);
+        }
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0,0,width,height);
+    ctx.fillStyle = '#99ccff';
+    ctx.strokeStyle = '#3399ff';
+    ctx.lineWidth = 0.5;
+
+    // Rysuj połączenia
+    for(let i=0; i<points.length; i++) {
+      const p = points[i];
+      for(const ci of p.connections) {
+        const c = points[ci];
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(c.x, c.y);
+        ctx.stroke();
+      }
+    }
+    // Rysuj punkty
+    for(const p of points) {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, 2*Math.PI);
+      ctx.fill();
+    }
+  }
+
+  function animate() {
+    draw();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', () => {
+    resize();
+    draw();
+  });
+
+  resize();
+  animate();
+
 </script>
 
 </body>
