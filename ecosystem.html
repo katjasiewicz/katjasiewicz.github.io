@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Ekosystem IT</title>
 <style>
-  body {
+  html, body {
     margin: 0;
+    height: 100%;
     background: #faf9f7;
     font-family: Montserrat, sans-serif;
+    display: flex;
+    justify-content: center; /* poziome centrowanie */
+    align-items: center;     /* pionowe centrowanie */
+    padding: 20px;           /* odstęp od krawędzi okna */
+    box-sizing: border-box;
+  }
+
+  svg {
+    width: 90vw;       /* zajmuje 90% szerokości okna przeglądarki */
+    max-width: 1100px; /* ale nie większe niż 1100px */
+    height: auto;      /* wysokość proporcjonalna do szerokości */
+    display: block;
+    border: 1px solid #ccc; /* opcjonalna ramka, dla wizualizacji */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    background: white;
   }
 
   .node {
