@@ -3,377 +3,157 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Desktop Style Portfolio z Konsolą</title>
+<title>Portfolio Kasi - Start</title>
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: #f0f8ff;
-    font-family: 'Consolas', monospace, monospace;
-    color: #003366;
-    overflow: hidden;
-    position: relative;
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body, html {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0b3d2e;
+    color: #e0f2f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
   }
 
-  #constellation-bg {
+  /* Delikatna tekstura tła */
+  body::before {
+    content: "";
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-radial-gradient(circle at center, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 10px);
     pointer-events: none;
     z-index: 0;
   }
 
-  #taskbar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: 40px;
-    width: 100%;
-    background: #001f3f;
-    border-top: 2px solid #3399ff;
+  .container {
     display: flex;
-    align-items: center;
-    padding: 0 10px;
-    box-sizing: border-box;
-    color: #99ccff;
-    font-size: 14px;
-    z-index: 10;
+    gap: 40px;
+    max-width: 960px;
+    width: 90%;
+    z-index: 1;
   }
 
-  #desktop-icons {
-    position: fixed;
-    top: 80px;
-    right: 20px;
+  /* Kafelek O mnie */
+  .about-me {
+    flex: 1 1 280px;
+    background: #144d36;
+    border-radius: 12px;
+    padding: 30px 20px;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.5);
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .about-me:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.8);
+  }
+  .about-me h2 {
+    margin-top: 0;
+    font-size: 2.4rem;
+    margin-bottom: 12px;
+    color: #a7d7c5;
+  }
+  .about-me p {
+    font-size: 1.1rem;
+    color: #c8e6c9;
+  }
+
+  /* Kafelki 2x2 */
+  .tiles {
+    flex: 2 1 600px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 20px;
-    z-index: 10;
-  }
-  .folder {
-    cursor: pointer;
-    width: 80px;
-    text-align: center;
-    user-select: none;
-  }
-  .folder-icon {
-    font-size: 48px;
-    color: #0066cc;
-    transition: color 0.3s;
-  }
-  .folder:hover .folder-icon {
-    color: #3399ff;
-  }
-  .folder-label {
-    margin-top: 5px;
-    font-size: 14px;
   }
 
-  #terminal-window {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 65vw;
-    height: 65vh;
-    background: #001f3f;
-    border: 2px solid #3399ff;
-    border-radius: 8px;
-    box-shadow: 0 0 20px #3399ffaa;
-    color: #99ccff;
+  .tile {
+    background: #144d36;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
     display: flex;
     flex-direction: column;
-    z-index: 20;
-  }
-
-  #terminal-header {
-    background: #003366;
-    padding: 10px 15px;
-    font-weight: bold;
-    border-bottom: 1px solid #3399ff;
-    user-select: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  #terminal-header button {
-    background: #3399ff;
-    border: none;
-    color: #001f3f;
-    font-weight: bold;
+    justify-content: center;
     cursor: pointer;
-    width: 30px;
-    height: 25px;
-    border-radius: 3px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
-  #terminal-header button:hover {
-    background: #66b2ff;
+  .tile:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.7);
   }
-
-  #terminal-content {
-    flex-grow: 1;
-    padding: 15px;
-    background: #001f3f;
-    font-size: 14px;
-    overflow-y: auto;
-    font-family: 'Source Code Pro', monospace, monospace;
-    white-space: pre-wrap;
+  .tile h3 {
+    margin: 0 0 10px;
+    font-size: 1.6rem;
+    color: #a7d7c5;
   }
-
-  /* Input do wpisywania komend */
-  #terminal-input {
-    border-top: 1px solid #3399ff;
-    background: #002244;
-    padding: 10px 15px;
-    font-family: 'Consolas', monospace;
-    color: #99ccff;
-    outline: none;
-    border: none;
-    font-size: 14px;
+  .tile p {
+    margin: 0;
+    font-size: 1rem;
+    color: #c8e6c9;
   }
 
-  #projects-window {
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    width: 400px;
-    height: 300px;
-    background: rgba(255 255 255 / 0.95);
-    border: 2px solid #3399ff;
-    border-radius: 8px;
-    box-shadow: 0 0 20px #3399ffaa;
-    display: none;
-    flex-direction: column;
-    color: #003366;
-    z-index: 20;
+  /* Ikony (proste emoji na start, możesz podmienić) */
+  .icon {
+    font-size: 2.8rem;
+    margin-bottom: 12px;
   }
 
-  #projects-window-header {
-    padding: 8px 12px;
-    background: #cce6ff;
-    border-bottom: 1px solid #3399ff;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    user-select: none;
-  }
-  #projects-window-header button {
-    background: #3399ff;
-    border: none;
-    color: #001f3f;
-    font-weight: bold;
-    cursor: pointer;
-    width: 25px;
-    height: 25px;
-    border-radius: 3px;
-  }
-  #projects-window-header button:hover {
-    background: #66b2ff;
-  }
-
-  #projects-window-content {
-    padding: 15px;
-    overflow-y: auto;
-    flex-grow: 1;
-  }
-  .project-item {
-    padding: 8px;
-    border: 1px solid #3399ff;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .project-item:hover {
-    background: #cce6ff;
+  /* Responsywność */
+  @media(max-width: 768px) {
+    .container {
+      flex-direction: column;
+      gap: 30px;
+    }
+    .tiles {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(4, auto);
+      gap: 15px;
+    }
   }
 </style>
 </head>
 <body>
 
-<canvas id="constellation-bg"></canvas>
+<div class="container">
+  <div class="about-me" onclick="alert('Przejdź do sekcji O mnie / CV')">
+    <div class="icon">👤</div>
+    <h2>O mnie</h2>
+    <p>Poznaj mnie i pobierz CV</p>
+  </div>
 
-<div id="desktop-icons">
-  <div class="folder" id="folder-projects" title="Projekty">
-    <div class="folder-icon">📁</div>
-    <div class="folder-label">Projekty</div>
+  <div class="tiles">
+    <div class="tile" onclick="alert('Przejdź do IT Ecosystem Map')">
+      <div class="icon">🗺️</div>
+      <h3>IT Ecosystem Map</h3>
+      <p>Projekt paintball i systemy</p>
+    </div>
+    <div class="tile" onclick="alert('Przejdź do Baza Wiedzy (fundacja)')">
+      <div class="icon">📚</div>
+      <h3>Baza Wiedzy (fundacja)</h3>
+      <p>Projekt edukacyjny NGO</p>
+    </div>
+    <div class="tile" onclick="alert('Przejdź do Salesforce Implementations')">
+      <div class="icon">🔄</div>
+      <h3>Salesforce Implementations</h3>
+      <p>Wdrożenia CRM dla NGO</p>
+    </div>
+    <div class="tile" onclick="alert('Przejdź do Automatyzacje Biznesowe')">
+      <div class="icon">⚙️</div>
+      <h3>Automatyzacje Biznesowe</h3>
+      <p>EDI, raporty, integracje</p>
+    </div>
   </div>
 </div>
-
-<div id="terminal-window">
-  <div id="terminal-header">
-    Terminal
-    <button id="close-terminal">×</button>
-  </div>
-  <div id="terminal-content" tabindex="0">
-    <pre>> echo "Witaj w moim portfolio!"</pre>
-    <pre>Witaj w moim portfolio!</pre>
-    <pre>> ls projekty/</pre>
-    <pre>PaintballPlatform  FlaskApp  ASPNetApp</pre>
-  </div>
-  <input type="text" id="terminal-input" placeholder="Wpisz komendę i naciśnij Enter" autocomplete="off" autofocus />
-</div>
-
-<div id="projects-window">
-  <div id="projects-window-header">
-    Projekty
-    <button id="close-projects">×</button>
-  </div>
-  <div id="projects-window-content">
-    <div class="project-item" data-name="Paintball Platform">Platforma do Rezerwacji Gier Paintballowych</div>
-    <div class="project-item" data-name="Flask App">Aplikacja we Flask</div>
-    <div class="project-item" data-name="ASP.NET App">Aplikacja w ASP.NET</div>
-  </div>
-</div>
-
-<div id="taskbar">
-  Desktop Portfolio | { <span id="clock"></span> }
-</div>
-
-<script>
-  const folderProjects = document.getElementById('folder-projects');
-  const projectsWindow = document.getElementById('projects-window');
-  const closeProjectsBtn = document.getElementById('close-projects');
-
-  folderProjects.addEventListener('click', () => {
-    projectsWindow.style.display = 'flex';
-  });
-  closeProjectsBtn.addEventListener('click', () => {
-    projectsWindow.style.display = 'none';
-  });
-
-  const terminalWindow = document.getElementById('terminal-window');
-  const closeTerminalBtn = document.getElementById('close-terminal');
-  closeTerminalBtn.addEventListener('click', () => {
-    terminalWindow.style.display = 'none';
-  });
-
-  document.querySelectorAll('.project-item').forEach(item => {
-    item.addEventListener('click', () => {
-      alert('Kliknięto projekt: ' + item.dataset.name + '\nTutaj możesz dodać opis lub przejść do podstrony.');
-    });
-  });
-
-  function updateClock() {
-    const clock = document.getElementById('clock');
-    const now = new Date();
-    clock.textContent = now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute: '2-digit'});
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
-  // Konstelacje canvas
-  const canvas = document.getElementById('constellation-bg');
-  const ctx = canvas.getContext('2d');
-  let width, height;
-  let points = [];
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-
-    points = [];
-    const numPoints = 60;
-    for(let i=0; i<numPoints; i++) {
-      points.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        radius: 1 + Math.random() * 2,
-        connections: []
-      });
-    }
-
-    const maxDistance = 150;
-    for(let i=0; i<points.length; i++) {
-      for(let j=i+1; j<points.length; j++) {
-        let dx = points[i].x - points[j].x;
-        let dy = points[i].y - points[j].y;
-        let dist = Math.sqrt(dx*dx + dy*dy);
-        if(dist < maxDistance) {
-          points[i].connections.push(j);
-          points[j].connections.push(i);
-        }
-      }
-    }
-  }
-
-  function draw() {
-    ctx.clearRect(0,0,width,height);
-    ctx.fillStyle = '#99ccff';
-    ctx.strokeStyle = '#3399ff';
-    ctx.lineWidth = 0.5;
-
-    for(let i=0; i<points.length; i++) {
-      const p = points[i];
-      for(const ci of p.connections) {
-        const c = points[ci];
-        ctx.beginPath();
-        ctx.moveTo(p.x, p.y);
-        ctx.lineTo(c.x, c.y);
-        ctx.stroke();
-      }
-    }
-    for(const p of points) {
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, 2*Math.PI);
-      ctx.fill();
-    }
-  }
-
-  function animate() {
-    draw();
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', () => {
-    resize();
-    draw();
-  });
-
-  resize();
-  animate();
-
-  // Obsługa terminal input
-  const terminalContent = document.getElementById('terminal-content');
-  const terminalInput = document.getElementById('terminal-input');
-
-  terminalInput.addEventListener('keydown', function(e) {
-    if(e.key === 'Enter') {
-      const cmd = terminalInput.value.trim();
-      if(cmd) {
-        processCommand(cmd);
-      }
-      terminalInput.value = '';
-    }
-  });
-
-  function processCommand(cmd) {
-    appendLine(`> ${cmd}`);
-    switch(cmd.toLowerCase()) {
-      case 'help':
-        appendLine("Dostępne komendy:\nhelp - lista komend\nls projekty - lista projektów\nclear - wyczyść terminal\nexit - ukryj terminal");
-        break;
-      case 'ls projekty':
-        appendLine("PaintballPlatform  FlaskApp  ASPNetApp");
-        break;
-      case 'clear':
-        terminalContent.innerHTML = '';
-        break;
-      case 'exit':
-        terminalWindow.style.display = 'none';
-        break;
-      default:
-        appendLine(`Nieznana komenda: ${cmd}`);
-    }
-    terminalContent.scrollTop = terminalContent.scrollHeight;
-  }
-
-  function appendLine(text) {
-    const pre = document.createElement('pre');
-    pre.textContent = text;
-    terminalContent.appendChild(pre);
-  }
-</script>
 
 </body>
 </html>
