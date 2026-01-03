@@ -5,99 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Portfolio Kasi - Start</title>
 <style>
-  /* Reset */
+  /* Import czcionki Montserrat z Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+  /* Reset i podstawy */
   * {
     box-sizing: border-box;
   }
   body, html {
     margin: 0; padding: 0;
     height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #0b3d2e;
-    color: #e0f2f1;
+    font-family: 'Montserrat', sans-serif;
+    background: #faf9f7; /* jasne kremowe */
+    color: #1b3a2d; /* ciemna butelkowa zieleń */
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
   }
 
-  /* Delikatna tekstura tła */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-radial-gradient(circle at center, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 10px);
-    pointer-events: none;
-    z-index: 0;
-  }
-
+  /* Kontener główny */
   .container {
     display: flex;
-    gap: 40px;
+    gap: 48px;
     max-width: 960px;
     width: 90%;
-    z-index: 1;
+    padding: 40px 20px;
   }
 
   /* Kafelek O mnie */
   .about-me {
     flex: 1 1 280px;
-    background: #144d36;
-    border-radius: 12px;
-    padding: 30px 20px;
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.5);
+    background: #2f6e49; /* mocniejsza butelkowa zieleń */
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 24px rgba(47,110,73,0.3);
+    color: #f1f0ec;
     display: flex;
     flex-direction: column;
     justify-content: center;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     font-weight: 600;
-    font-size: 1.4rem;
+    font-size: 2rem;
     text-align: center;
   }
   .about-me:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.8);
+    transform: scale(1.06);
+    box-shadow: 0 12px 36px rgba(47,110,73,0.5);
   }
 
-  /* Kafelki 2x2 */
+  /* Kafle 2x2 */
   .tiles {
     flex: 2 1 600px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 20px;
+    gap: 24px;
   }
 
   .tile {
-    background: #144d36;
-    border-radius: 12px;
-    padding: 25px 20px;
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+    background: #e6f0e8; /* bardzo jasny zielony z nutą kremu */
+    border-radius: 16px;
+    padding: 30px 25px;
+    box-shadow: 0 4px 16px rgba(27,58,45,0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    color: #1b3a2d;
     text-align: center;
   }
   .tile:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.7);
+    transform: scale(1.04);
+    box-shadow: 0 8px 24px rgba(27,58,45,0.3);
   }
 
   /* Responsywność */
   @media(max-width: 768px) {
     .container {
       flex-direction: column;
-      gap: 30px;
+      gap: 32px;
+      padding: 20px;
     }
     .tiles {
       grid-template-columns: 1fr;
       grid-template-rows: repeat(4, auto);
-      gap: 15px;
+      gap: 16px;
     }
   }
 </style>
@@ -110,16 +107,16 @@
   </div>
 
   <div class="tiles">
-    <div class="tile" onclick="alert('Przejdź do IT Ecosystem Map')">
+    <div class="tile" onclick="alert('Przejdź do Mapa ekosystemu IT')">
       Mapa ekosystemu IT
     </div>
     <div class="tile" onclick="alert('Przejdź do Baza Wiedzy (fundacja)')">
       Baza Wiedzy (fundacja)
     </div>
-    <div class="tile" onclick="alert('Przejdź do Salesforce Implementations')">
+    <div class="tile" onclick="alert('Przejdź do Wdrożenia Salesforce (NGO)')">
       Wdrożenia Salesforce (NGO)
     </div>
-    <div class="tile" onclick="alert('Przejdź do Automatyzacje Biznesowe')">
+    <div class="tile" onclick="alert('Przejdź do Automatyzacje biznesowe')">
       Automatyzacje biznesowe
     </div>
   </div>
