@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mapa ekosystemu IT - Paintball Project</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9faf9;
+    color: #2f4f4f;
+    margin: 20px;
+    user-select: none;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  svg {
+    display: block;
+    margin: 0 auto;
+    max-width: 900px;
+    height: 500px;
+  }
+
+  .system-node {
+    cursor: pointer;
+    fill: #2f6e49;
+    stroke: #194d30;
+    stroke-width: 2;
+    transition: fill 0.3s ease;
+  }
+  .system-node:hover {
+    fill: #4ca16a;
+  }
+
+  .system-label {
+    fill: #1b3a2d;
+    font-weight: 600;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Tooltip styl */
+  #tooltip {
+    position: absolute;
+    background: #2f6e49;
+    color: #f0f0e0;
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(47,110,73,0.5);
+    font-size: 14px;
+    max-width: 250px;
+    display: none;
+    z-index: 10;
+  }
+  #tooltip a {
+    color: #cceedd;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  #tooltip a:hover {
+    color: #a3d9b1;
+  }
+</style>
+</head>
+<body>
+
+<h1>Mapa ekosystemu IT projektu Paintball</h1>
+
+<svg id="ecosystem" viewBox="0 0 900 500" aria-label="Mapa systemów IT projektu Paintball" role="img" tabindex="0">
+  <!-- Linia ERP <-> Product Management -->
+  <line x1="220" y1="120" x2="400" y2="120" stroke="#194d30" stroke-width="2"/>
+  <!-- Linia Product Management <-> CRM -->
+  <line x1="500" y1="120" x2="680" y2="120" stroke="#194d30" stroke-width="2"/>
+  <!-- Linia CRM <-> Marketing Automation -->
+  <line x1="680" y1="120" x2="680" y2="280" stroke="#194d30" stroke-width="2"/>
+  <!-- Linia Marketing Automation <-> Bots -->
+  <line x1="680" y1="280" x2="400" y2="280" stroke="#194d30" stroke-width="2"/>
+  <!-- Linia Bots <-> ERP -->
+  <line x1="400" y1="280" x2="220" y2="120" stroke="#194d30" stroke-width="2"/>
+
+  <!-- Core ERP -->
+  <circle class="system-node" cx="220" cy="120" r="60" tabindex="0" data-name="Core ERP" data-desc="Centralny system ERP z własnym kodem i bazą danych." data-link="erp.html"/>
+  <text class="system-label" x="220" y="120" text-anchor="middle" dominant-baseline="middle" font-size="16">Core ERP</text>
+
+  <!-- Product Management -->
+  <circle class="system-node" cx="400" cy="120" r="60" tabindex="0" data-name="Product Management" data-desc="System zarządzania produktami, integrujący PIM i inne narzędzia." data-link="product_management.html"/>
+  <text class="system-label" x="400" y="120" text-anchor="middle" dominant-baseline="middle" font-size="16">Product Management</text>
+
+  <!-- CRM (SpiceCRM) -->
+  <circle class="system-node" cx="680" cy="120" r="60" tabindex="0" data-name="CRM (SpiceCRM)" data-desc="Zarządzanie relacjami z klientem za pomocą SpiceCRM." data-link="crm.html"/>
+  <text class="system-label" x="680" y="120" text-anchor="middle" dominant-baseline="middle" font-size="16">CRM (SpiceCRM)</text>
+
+  <!-- Marketing Automation (Mautic) -->
+  <circle class="system-node" cx="680" cy="280" r="60" tabindex="0" data-name="Marketing Automation (Mautic)" data-desc="Automatyzacja kampanii marketingowych przez Mautic." data-link="marketing_automation.html"/>
+  <text class="system-label" x="680" y="280" text-anchor="middle" dominant-baseline="middle" font-size="16" style="font-size:13px">Marketing Automation<br>(Mautic)</text>
+
+  <!-- Bots (EDI) -->
+  <circle class="system-node" cx="400" cy="280" r="60" tabindex="0" data-name="Bots (EDI)" data-desc="Automatyczne boty obsługujące wymianę EDI." data-link="bots.html"/>
+  <text class="system-label" x="400" y="280" text-anchor="middle" dominant-baseline="middle" font-size="16">Bots (EDI)</text>
+</svg>
+
+<div id="tooltip" role="tooltip" aria-hidden="true"></div>
+
+<script>
+  const svg = document.getElementById('ecosystem');
+  const tooltip = document.getElementById('tooltip');
+
+  function positionTooltip(evt) {
+    const padding = 15;
+    const rect = tooltip.getBoundingClientRect();
+    let x = evt.clientX + padding;
+    let y = evt.clientY + padding;
+
+    // Zapobiega wyjściu poza ekran po prawej stronie
+    if (x + rect.width > window.innerWidth) {
+      x = evt.clientX - rect.width - padding;
+    }
+    // Zapobiega wyjściu poza dół ekranu
+    if (y + rect.height > window.innerHeight) {
+      y = evt.clientY - rect.height - padding;
+    }
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = y + 'px';
+  }
+
+  function showTooltip(evt) {
+    const target = evt.target.closest('.system-node');
+    if (!target) return;
+
+    const name = target.getAttribute('data-name');
+    const desc = target.getAttribute('data-desc');
+    const link = target.getAttribute('data-link');
+
+    tooltip.innerHTML = `<strong>${name}</strong><br>${desc}<br><a href="${link}">Zobacz więcej →</a>`;
+    tooltip.style.display = 'block';
+    tooltip.setAttribute('aria-hidden', 'false');
+    positionTooltip(evt);
+  }
+
+  function hideTooltip() {
+    tooltip.style.display = 'none';
+    tooltip.setAttribute('aria-hidden', 'true');
+  }
+
+  // Obsługa zdarzeń
+  svg.addEventListener('mousemove', (evt) => {
+    if (evt.target.closest('.system-node')) {
+      showTooltip(evt);
+    } else {
+      hideTooltip();
+    }
+  });
+
+  svg.addEventListener('mouseleave', hideTooltip);
+
+  // Dla dostępności - obsługa focus i blur na elementach
+  const nodes = svg.querySelectorAll('.system-node');
+  nodes.forEach(node => {
+    node.addEventListener('focus', (evt) => {
+      showTooltip(evt);
+    });
+    node.addEventListener('blur', (evt) => {
+      hideTooltip();
+    });
+  });
+</script>
+
+</body>
+</html>
